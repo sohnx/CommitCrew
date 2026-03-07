@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Commit_Crew</title>
+<title>GRIND SQUAD</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -871,9 +871,10 @@
     background: rgba(4,4,15,0.85);
     z-index: 200;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    padding: 1rem;
+    padding: 2rem 1rem;
+    overflow-y: auto;
     backdrop-filter: blur(4px);
     opacity: 0;
     pointer-events: none;
@@ -887,10 +888,15 @@
     border-radius: 16px;
     padding: 2rem;
     width: 100%;
-    max-width: 440px;
+    max-width: 520px;
+    max-height: 88vh;
+    overflow-y: auto;
+    overflow-x: hidden;
     box-shadow: 0 0 60px rgba(0,0,0,0.5);
     transform: translateY(20px) scale(0.97);
     transition: transform 0.25s;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
   }
   .modal-overlay.open .modal { transform: translateY(0) scale(1); }
 
