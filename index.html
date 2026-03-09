@@ -1098,23 +1098,6 @@
 
 
 
-  #view-lock { display:none; }
-  #view-lock.active { display:flex !important; }
-
-  .lock-user-card {
-    display:flex; align-items:center; gap:0.75rem;
-    padding:0.65rem 0.9rem;
-    background:var(--bg2); border:1px solid var(--border);
-    border-radius:10px; cursor:pointer;
-    transition:all 0.2s; margin-bottom:0.4rem;
-    width:100%;
-  }
-  .lock-user-card:hover { border-color:var(--cyan); background:var(--cyan-dim); }
-  .lock-user-card.selected { border-color:var(--cyan); background:var(--cyan-dim); }
-  .lock-user-card .lu-emoji { font-size:1.4rem; }
-  .lock-user-card .lu-name { font-weight:700; font-size:0.9rem; }
-  .lock-user-card .lu-streak { margin-left:auto; font-size:0.75rem; color:var(--orange); font-family:'Share Tech Mono',monospace; }
-
   /* ─── PROJECT WORKSPACE ─── */
   .proj-filter-tabs { display:flex; background:var(--bg2); border:1px solid var(--border); border-radius:8px; padding:3px; gap:3px; }
   .pf-tab { padding:0.3rem 0.8rem; border-radius:5px; border:none; background:transparent; color:var(--text2); font-family:'Nunito',sans-serif; font-size:0.8rem; font-weight:600; cursor:pointer; transition:all 0.2s; }
@@ -1608,48 +1591,39 @@
         <div style="text-align:center; padding:1rem 0;">
           <div style="font-size:4rem; margin-bottom:1rem;">🚀</div>
           <h3 style="font-family:'Orbitron',monospace; font-size:1rem; letter-spacing:2px; margin-bottom:0.5rem;">ALL SET!</h3>
-          <p style="color:var(--text2); font-size:0.84rem; line-height:1.7; margin-bottom:1.25rem;">
-            Send this <strong style="color:var(--cyan)">one link</strong> to your squad on WhatsApp or Discord.<br>
-            They click it → credentials auto-fill → they just pick a name + PIN → done.
+          <p style="color:var(--text2); font-size:0.85rem; line-height:1.7; margin-bottom:1rem;">
+            Share this <strong style="color:var(--cyan)">one invite link</strong> with your squad.<br>
+            They just click it — no tokens, no Gist IDs to copy manually.
           </p>
 
           <!-- Invite link box -->
-          <div style="background:var(--bg2);border:1px solid rgba(0,240,255,0.5);border-radius:12px;padding:1.1rem 1.1rem 0.9rem;margin-bottom:1rem;position:relative;">
-            <div style="font-size:0.6rem;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin-bottom:0.55rem;display:flex;align-items:center;gap:0.4rem;">
-              <span>🔗</span> SQUAD INVITE LINK
-            </div>
-            <div style="font-family:'Share Tech Mono',monospace;color:var(--text1);font-size:0.7rem;word-break:break-all;line-height:1.7;background:var(--bg3);padding:0.55rem 0.75rem;border-radius:7px;margin-bottom:0.75rem;" id="shareInviteLink">
-              <span style="color:var(--text3);">generating...</span>
-            </div>
-            <button onclick="copyInviteLink()"
-              style="width:100%;padding:0.6rem;border-radius:8px;border:none;background:var(--cyan);color:#000;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.85rem;cursor:pointer;letter-spacing:0.5px;transition:opacity 0.15s;"
-              onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+          <div style="background:var(--bg2);border:1px solid var(--cyan);border-radius:10px;padding:1rem;margin-bottom:0.75rem;">
+            <div style="font-size:0.62rem;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin-bottom:0.5rem;">🔗 Squad Invite Link</div>
+            <div style="font-family:'Share Tech Mono',monospace;color:var(--text1);font-size:0.72rem;word-break:break-all;line-height:1.6;" id="shareInviteLink">generating...</div>
+            <button onclick="copyInviteLink()" style="margin-top:0.75rem;width:100%;padding:0.55rem;border-radius:7px;border:1px solid var(--cyan);background:rgba(0,240,255,0.1);color:var(--cyan);font-family:'Nunito',sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='var(--cyan)';this.style.color='#000'" onmouseout="this.style.background='rgba(0,240,255,0.1)';this.style.color='var(--cyan)'">
               📋 Copy Invite Link
             </button>
           </div>
 
-          <!-- What happens tip -->
-          <div style="background:rgba(0,240,255,0.04);border:1px solid rgba(0,240,255,0.12);border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;font-size:0.76rem;color:var(--text2);line-height:1.8;">
-            <div style="color:var(--cyan);font-weight:700;font-size:0.7rem;letter-spacing:1px;margin-bottom:0.3rem;">HOW IT WORKS</div>
-            🔒 Token is encoded in the URL <code style="color:var(--cyan)">#hash</code> — never hits any server<br>
-            👆 One click joins the squad — no manual token/ID entry ever<br>
-            💾 After joining once, members stay logged in automatically
-          </div>
-
-          <!-- Hidden fallback -->
+          <!-- Fallback manual fields -->
           <details style="margin-bottom:1rem;">
-            <summary style="font-size:0.7rem;color:var(--text3);cursor:pointer;letter-spacing:1px;padding:0.3rem 0;user-select:none;">▸ Manual credentials (fallback only)</summary>
-            <div style="margin-top:0.6rem;display:flex;flex-direction:column;gap:0.4rem;">
-              <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.9rem;">
-                <div style="font-size:0.6rem;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-bottom:0.25rem;">Gist ID</div>
-                <div style="font-family:'Share Tech Mono',monospace;color:var(--cyan);font-size:0.75rem;word-break:break-all;" id="shareGistId"></div>
+            <summary style="font-size:0.72rem;color:var(--text3);cursor:pointer;letter-spacing:1px;text-transform:uppercase;padding:0.4rem 0;">▸ Show manual credentials (fallback)</summary>
+            <div style="margin-top:0.6rem;">
+              <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:0.75rem 1rem;margin-bottom:0.5rem;">
+                <div style="font-size:0.62rem;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-bottom:0.3rem;">Gist ID</div>
+                <div style="font-family:'Share Tech Mono',monospace;color:var(--cyan);font-size:0.78rem;word-break:break-all;" id="shareGistId"></div>
               </div>
-              <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.9rem;">
-                <div style="font-size:0.6rem;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-bottom:0.25rem;">Squad Token</div>
-                <div style="font-family:'Share Tech Mono',monospace;color:var(--pink);font-size:0.75rem;word-break:break-all;" id="shareToken"></div>
+              <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:0.75rem 1rem;">
+                <div style="font-size:0.62rem;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-bottom:0.3rem;">Squad Token</div>
+                <div style="font-family:'Share Tech Mono',monospace;color:var(--pink);font-size:0.78rem;word-break:break-all;" id="shareToken"></div>
               </div>
             </div>
           </details>
+
+          <p style="font-size:0.7rem;color:var(--text3);line-height:1.6;margin-bottom:1rem;">
+            🔒 The token is encoded in the URL hash — it never reaches any server.<br>
+            Once your squad joins, they stay logged in automatically.
+          </p>
           <button class="btn btn-primary btn-full" onclick="launchApp()">
             <span>⚡</span> ENTER THE GRIND
           </button>
@@ -1659,40 +1633,6 @@
     </div>
   </div>
 
-  <!-- ═══ LOCK SCREEN ═══ -->
-  <div id="view-lock" style="display:none; min-height:100vh; background:var(--bg0); align-items:center; justify-content:center; flex-direction:column; padding:2rem;">
-    <div style="text-align:center; margin-bottom:2rem;">
-      <div style="font-family:'Orbitron',monospace; font-size:1.4rem; font-weight:900; background:linear-gradient(135deg,var(--cyan),var(--pink)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; letter-spacing:3px; margin-bottom:0.3rem;">GRIND SQUAD</div>
-      <div style="color:var(--text3); font-size:0.72rem; letter-spacing:3px;">LOCKED</div>
-    </div>
-
-    <div style="background:var(--bg1); border:1px solid var(--border); border-radius:16px; padding:2rem; width:100%; max-width:360px; box-shadow:0 0 60px rgba(0,0,0,0.4);">
-      <div id="lockUserDisplay" style="text-align:center; margin-bottom:1.5rem;"></div>
-
-      <div id="lockMultiUsers" style="display:none; margin-bottom:1rem;">
-        <div style="font-size:0.68rem; letter-spacing:2px; text-transform:uppercase; color:var(--text2); margin-bottom:0.5rem;">Select Profile</div>
-        <div id="lockUserList"></div>
-      </div>
-
-      <div id="lockPinSection">
-        <div style="font-size:0.72rem; letter-spacing:2px; text-transform:uppercase; color:var(--text2); margin-bottom:0.5rem; text-align:center;">Enter PIN</div>
-        <input class="form-input" type="password" id="lockPinInput"
-          placeholder="••••" maxlength="8" inputmode="numeric"
-          style="text-align:center; font-size:1.8rem; letter-spacing:8px; margin-bottom:0.5rem;"
-          onkeydown="if(event.key==='Enter') unlockProfile()">
-        <div id="lockPinError" style="color:var(--hard); font-size:0.75rem; text-align:center; min-height:1.2rem; margin-bottom:0.75rem;"></div>
-        <button class="btn btn-primary" style="width:100%;" onclick="unlockProfile()">🔓 Unlock</button>
-      </div>
-
-      <div style="margin-top:1.25rem; padding-top:1rem; border-top:1px solid var(--border); text-align:center;">
-        <button onclick="signOutOfSquad()" style="background:none; border:none; color:var(--text3); font-size:0.75rem; cursor:pointer; font-family:'Nunito',sans-serif; transition:color 0.2s;" onmouseover="this.style.color='var(--pink)'" onmouseout="this.style.color='var(--text3)'">
-          Sign out of squad completely →
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ MAIN APP VIEW ═══ -->
   <!-- ═══ MAIN APP VIEW ═══ -->
   <div id="view-app" class="view">
 
@@ -1716,7 +1656,7 @@
         <div class="sync-dot" id="syncDot"></div>
         <span id="syncText">live</span>
       </div>
-      <button class="btn-logout" onclick="logout()" title="Lock — squad stays saved on this device">
+      <button class="btn-logout" onclick="logout()" title="Lock profile — squad stays saved">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
         <span>Lock</span>
       </button>
@@ -2163,12 +2103,10 @@ function renderExistingUsers() {
 }
 
 async function selectExistingUser(username) {
-  // Existing users just need PIN → launch app. Never show "All Set" screen.
-  promptPin(username, () => {
-    state.currentUser = username;
-    localStorage.setItem('gs_user', username);
-    launchApp();
-  });
+  state.currentUser = username;
+  localStorage.setItem('gs_user', username);
+  goStep(2);
+  $('shareGistId').textContent = state.gistId;
 }
 
 async function hashPin(pin) {
@@ -2207,14 +2145,11 @@ async function stepCreateUser() {
 
   if(ok) {
     localStorage.setItem('gs_user', username);
-    if(_currentRole === 'creator') {
-      // Creator gets the "All Set + Share Invite Link" screen
-      goStep(2);
-      setInviteLink();
-    } else {
-      // Joiners go straight into the app
-      launchApp();
-    }
+    goStep(2);
+    $('shareGistId').textContent = state.gistId;
+    $('shareToken').textContent = state.token;
+    const invEl = $('shareInviteLink');
+    if(invEl) invEl.textContent = buildInviteLink(state.token, state.gistId);
   }
 }
 
@@ -2242,29 +2177,25 @@ function promptPin(username) {
 
 async function verifyPin(username) {
   const u = state.data.users[username];
-  const pin = $('pinInput')?.value.trim();
-  const errEl = $('pinError');
-  if(!pin) { if(errEl) errEl.textContent = 'Enter your PIN'; return; }
+  const pin = $('pinInput').value.trim();
+  if(!pin) { $('pinError').textContent = 'Please enter your PIN'; return; }
 
-  // Legacy accounts without a PIN hash — let them straight through
+  // Legacy accounts without PIN — allow any entry
   if(!u.pinHash) {
     closeModal();
-    const cb = window._pinCallback;
-    window._pinCallback = null;
-    if(cb) { cb(); } else { state.currentUser = username; localStorage.setItem('gs_user', username); launchApp(); }
+    await selectExistingUser(username);
     return;
   }
 
   const hash = await hashPin(pin);
   if(hash !== u.pinHash) {
-    if(errEl) errEl.textContent = '❌ Wrong PIN — try again';
-    if($('pinInput')) { $('pinInput').value = ''; $('pinInput').focus(); }
+    $('pinError').textContent = '❌ Wrong PIN. Try again.';
+    $('pinInput').value = '';
+    $('pinInput').focus();
     return;
   }
   closeModal();
-  const cb = window._pinCallback;
-  window._pinCallback = null;
-  if(cb) { cb(); } else { state.currentUser = username; localStorage.setItem('gs_user', username); launchApp(); }
+  await selectExistingUser(username);
 }
 
 function launchApp() {
@@ -3837,32 +3768,26 @@ function showUserMenu() {
       <div style="height:0.75rem;"></div>
     ` : ''}
 
-    <!-- Actions -->
-    <div style="display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1rem;">
-      <button class="btn btn-ghost" style="width:100%; justify-content:center;" onclick="copyInviteLinkFromMenu()">
-        🔗 Copy Invite Link — share with squad
-      </button>
-      <button class="btn btn-ghost" style="width:100%; justify-content:center;" onclick="logout()">
-        🔒 Lock Screen — switch profiles or step away
-      </button>
-      <button class="btn btn-ghost" style="width:100%; justify-content:center; color:var(--medium); border-color:rgba(255,179,0,0.3);" onclick="closeModal(); signOutOfSquad()">
-        🚪 Sign Out — remove squad from this device
-      </button>
-    </div>
-
     <!-- Danger zone -->
     <div style="border:1px solid rgba(255,45,120,0.25); border-radius:var(--r); padding:0.85rem 1rem; background:rgba(255,45,120,0.04);">
       <div style="font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--pink); margin-bottom:0.6rem;">⚠ Danger Zone</div>
-      <button class="btn btn-danger" style="width:100%;" onclick="closeModal();initiateDeleteProfile()">
-        🗑 Delete My Profile & All Data
+      <button class="btn btn-danger" style="width:100%; margin-bottom:0.5rem;" onclick="closeModal();initiateDeleteProfile()">
+        🗑 Delete My Profile & Data
       </button>
-      <div style="font-size:0.68rem; color:var(--text3); line-height:1.5; text-align:center; margin-top:0.4rem;">
-        Permanently wipes your account from the squad.<br>
-        <strong style="color:var(--pink);">Cannot be undone.</strong>
+      <div style="font-size:0.7rem; color:var(--text3); line-height:1.5; text-align:center; margin-bottom:0.75rem;">
+        Permanently removes your profile, all LeetCode logs, and streaks from the squad.<br>
+        <strong style="color:var(--pink);">This cannot be undone.</strong>
+      </div>
+      <button class="btn btn-ghost" style="width:100%; border-color:rgba(120,120,170,0.3); font-size:0.8rem;" onclick="leaveSquad()">
+        🚪 Leave Squad (keeps your profile, removes this device)
+      </button>
+      <div style="font-size:0.68rem; color:var(--text3); line-height:1.5; text-align:center; margin-top:0.35rem;">
+        Your data stays in the squad. Use the invite link to rejoin on any device.
       </div>
     </div>
 
     <div class="modal-actions" style="margin-top:1rem;">
+      <button class="btn btn-danger" onclick="logout()" style="background:transparent; border-color:rgba(255,45,120,0.3);">🔒 Lock Profile</button>
       <button class="btn btn-ghost" style="flex:1;" onclick="closeModal()">Close</button>
     </div>
   `);
@@ -3947,6 +3872,7 @@ async function confirmDeleteProfile() {
 
   if(ok) {
     showToast(`${name} has been deleted.`, 'info');
+    // Only clear who is logged in — keep squad credentials
     localStorage.removeItem('gs_user');
     setTimeout(() => location.reload(), 1200);
   } else {
@@ -3955,8 +3881,34 @@ async function confirmDeleteProfile() {
 }
 
 function logout() {
-  // Lock — only forgets active user, squad stays saved
+  // Only forget WHO is logged in — keep squad credentials so
+  // rejoining only needs a PIN, not the full invite link again
   localStorage.removeItem('gs_user');
+  location.reload();
+}
+
+function leaveSquad() {
+  closeModal();
+  openModal(`
+    <div class="modal-title">🚪 Leave Squad</div>
+    <div style="text-align:center; padding:0.5rem 0 1rem;">
+      <div style="font-size:2.5rem; margin-bottom:0.5rem;">🔓</div>
+      <p style="color:var(--text2); font-size:0.85rem; line-height:1.7;">
+        This removes the squad from <strong>this device only</strong>.<br>
+        Your profile and all your data stay in the squad.<br>
+        Use the invite link to rejoin on any device anytime.
+      </p>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="showUserMenu()">← Cancel</button>
+      <button class="btn btn-danger" style="flex:1; background:transparent;" onclick="doLeaveSquad()">Leave this device</button>
+    </div>
+  `);
+}
+
+function doLeaveSquad() {
+  localStorage.clear(); // full wipe — need invite link to rejoin
+  closeModal();
   location.reload();
 }
 
@@ -3972,8 +3924,7 @@ async function refreshData() {
 // ── Invite Link helpers ──
 function buildInviteLink(token, gistId) {
   const payload = btoa(JSON.stringify({ t: token, g: gistId }));
-  const base = location.origin + location.pathname;
-  return `${base}#invite=${payload}`;
+  return `${location.origin}${location.pathname}#invite=${payload}`;
 }
 
 function parseInviteHash() {
@@ -3986,200 +3937,48 @@ function parseInviteHash() {
   return null;
 }
 
-function copyInviteLinkFromMenu() {
-  if(!state.token || !state.gistId) { showToast('Squad not connected', 'error'); return; }
-  const link = buildInviteLink(state.token, state.gistId);
-  navigator.clipboard.writeText(link).then(
-    () => showToast('Invite link copied! Share on WhatsApp/Discord 🔗', 'success'),
-    () => showToast('Copy failed — try from the setup screen', 'error')
-  );
-}
-
 function copyInviteLink() {
-  const el = $('shareInviteLink');
-  if(!el) return;
-  // Always regenerate fresh from state to ensure accuracy
-  if(!state.token || !state.gistId) { showToast('Squad not connected yet', 'error'); return; }
-  const link = buildInviteLink(state.token, state.gistId);
-  el.innerHTML = link;
-  navigator.clipboard.writeText(link).then(
-    () => showToast('Invite link copied! Share on WhatsApp/Discord 🔗', 'success'),
-    () => { showToast('Copy failed — select the link manually', 'error'); }
-  );
-}
-
-function setInviteLink() {
-  const el = $('shareInviteLink');
-  if(!el) return;
-  if(state.token && state.gistId) {
-    const link = buildInviteLink(state.token, state.gistId);
-    el.innerHTML = link; // plain text, no span wrapper
-  }
-}
-
-// ── Session state machine ──
-// STATE 1: token + gist + user all saved  → auto login
-// STATE 2: token + gist saved, no user    → lock screen (PIN only)
-// STATE 3: nothing saved                  → full setup
-
-function showLockScreen() {
-  $('view-setup').style.display = 'none';
-  $('view-app').style.display = 'none';
-  const lockView = $('view-lock');
-  lockView.style.display = 'flex';
-  lockView.style.flexDirection = 'column';
-
-  const users = Object.values(state.data.users);
-  const lockPinSection = $('lockPinSection');
-  const lockMultiUsers = $('lockMultiUsers');
-  const lockUserDisplay = $('lockUserDisplay');
-
-  window._lockSelectedUser = null;
-
-  if(users.length === 1) {
-    // Single user — show their avatar and go straight to PIN
-    const u = users[0];
-    window._lockSelectedUser = u.username;
-    lockUserDisplay.innerHTML = `
-      <div style="font-size:3.5rem; margin-bottom:0.5rem; filter:drop-shadow(0 0 20px rgba(0,240,255,0.3));">${u.emoji}</div>
-      <div style="font-weight:800; font-size:1.1rem;">${u.name}</div>
-      <div style="color:var(--orange); font-size:0.8rem; margin-top:0.25rem; font-family:'Share Tech Mono',monospace;">🔥 ${u.streak||0} day streak</div>
-    `;
-    lockMultiUsers.style.display = 'none';
-    lockPinSection.style.display = 'block';
-  } else {
-    // Multiple users — show picker first, PIN after selection
-    lockUserDisplay.innerHTML = `<div style="color:var(--text2); font-size:0.85rem; margin-bottom:0.75rem;">Who's logging in?</div>`;
-    lockMultiUsers.style.display = 'block';
-    lockPinSection.style.display = 'none';
-
-    $('lockUserList').innerHTML = users.map(u => `
-      <div class="lock-user-card" onclick="selectLockUser('${u.username}', this)">
-        <span class="lu-emoji">${u.emoji}</span>
-        <div>
-          <div class="lu-name">${u.name}</div>
-        </div>
-        <span class="lu-streak">🔥 ${u.streak||0}</span>
-      </div>
-    `).join('');
-  }
-
-  // Focus PIN if single user
-  if(users.length === 1) {
-    setTimeout(() => $('lockPinInput')?.focus(), 200);
-  }
-}
-
-function selectLockUser(username, el) {
-  window._lockSelectedUser = username;
-  document.querySelectorAll('.lock-user-card').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-
-  const u = state.data.users[username];
-  const lockUserDisplay = $('lockUserDisplay');
-  lockUserDisplay.innerHTML = `
-    <div style="font-size:3rem; margin-bottom:0.4rem;">${u.emoji}</div>
-    <div style="font-weight:800; font-size:1rem;">${u.name}</div>
-    <div style="color:var(--orange); font-size:0.75rem; margin-top:0.2rem; font-family:'Share Tech Mono',monospace;">🔥 ${u.streak||0} streak</div>
-  `;
-
-  $('lockMultiUsers').style.display = 'none';
-  $('lockPinSection').style.display = 'block';
-  $('lockPinError').textContent = '';
-  $('lockPinInput').value = '';
-  setTimeout(() => $('lockPinInput')?.focus(), 100);
-}
-
-async function unlockProfile() {
-  const username = window._lockSelectedUser;
-  if(!username) { $('lockPinError').textContent = 'Select a profile first'; return; }
-
-  const u = state.data.users[username];
-  const pin = $('lockPinInput').value.trim();
-  const errEl = $('lockPinError');
-
-  if(!pin) { errEl.textContent = 'Enter your PIN'; return; }
-
-  // Legacy accounts with no PIN hash
-  if(!u.pinHash) {
-    completeLockUnlock(username);
-    return;
-  }
-
-  const hash = await hashPin(pin);
-  if(hash !== u.pinHash) {
-    errEl.textContent = '❌ Wrong PIN';
-    $('lockPinInput').value = '';
-    $('lockPinInput').focus();
-    // Shake animation
-    $('lockPinInput').style.animation = 'none';
-    setTimeout(() => { $('lockPinInput').style.borderColor = 'var(--hard)'; }, 0);
-    setTimeout(() => { $('lockPinInput').style.borderColor = ''; }, 1200);
-    return;
-  }
-
-  completeLockUnlock(username);
-}
-
-function completeLockUnlock(username) {
-  state.currentUser = username;
-  localStorage.setItem('gs_user', username);
-  $('view-lock').style.display = 'none';
-  $('view-app').style.display = 'flex';
-  $('view-app').style.flexDirection = 'column';
-  initApp();
-}
-
-function signOutOfSquad() {
-  // Full wipe — need invite link to come back
-  if(!confirm('This will sign you out of the squad on this device. You\'ll need the invite link to rejoin. Continue?')) return;
-  localStorage.clear();
-  location.reload();
+  const link = $('shareInviteLink')?.textContent;
+  if(!link || link === 'generating...') return;
+  navigator.clipboard.writeText(link).then(() => showToast('Invite link copied! 🔗', 'success'));
 }
 
 async function boot() {
-  setLoading(true, 'INITIALIZING...');
+  setLoading(true, 'LOADING...');
 
-  // ── Check for invite link in URL hash (STATE 3 shortcut) ──
+  // ── Check for invite link in URL hash ──
   const invite = parseInviteHash();
   if(invite) {
+    // Clear hash from URL without reload
     history.replaceState(null, '', location.pathname);
-    state.token  = invite.t;
-    state.gistId = invite.g;
-
-    $('loadingText').textContent = 'LOADING SQUAD...';
-    const ok = await loadData();
-    if(ok) {
-      // Save credentials so they never need link again
-      localStorage.setItem('gs_token', invite.t);
-      localStorage.setItem('gs_gist', invite.g);
-      setLoading(false);
-      buildEmojiPicker();
-      renderExistingUsers();
-      goStep(1);
-      $('view-setup').classList.add('active');
-      return;
-    }
+    // Auto-fill joiner fields and switch to joiner mode
     setLoading(false);
     $('view-setup').classList.add('active');
     setRole('joiner');
     setTimeout(() => {
-      if($('inputTokenJoiner')) $('inputTokenJoiner').value = invite.t;
-      if($('inputGistId')) $('inputGistId').value = invite.g;
-      if($('inviteDetectedBanner')) $('inviteDetectedBanner').style.display = 'block';
+      const tEl = $('inputTokenJoiner');
+      const gEl = $('inputGistId');
+      const banner = $('inviteDetectedBanner');
+      if(tEl) tEl.value = invite.t;
+      if(gEl) gEl.value = invite.g;
+      if(banner) banner.style.display = 'block';
     }, 100);
     return;
   }
 
-  const token  = localStorage.getItem('gs_token');
+  // ── Normal session restore ──
+  const token = localStorage.getItem('gs_token');
   const gistId = localStorage.getItem('gs_gist');
-  const user   = localStorage.getItem('gs_user');
+  const user = localStorage.getItem('gs_user');
 
-  // ── STATE 1: Fully authenticated ──
   if(token && gistId && user) {
-    state.token = token; state.gistId = gistId; state.currentUser = user;
+    state.token = token;
+    state.gistId = gistId;
+    state.currentUser = user;
+
     $('loadingText').textContent = 'LOADING SQUAD DATA...';
     const ok = await loadData();
+
     if(ok && state.data.users[user]) {
       setLoading(false);
       $('view-setup').style.display = 'none';
@@ -4188,23 +3987,28 @@ async function boot() {
       initApp();
       return;
     }
-    // User was deleted from squad — fall through to lock screen
-    localStorage.removeItem('gs_user');
   }
 
-  // ── STATE 2: Squad saved, no active user → Lock Screen ──
-  if(token && gistId) {
-    state.token = token; state.gistId = gistId;
+  // ── Token + Gist saved but no user (after logout) ──
+  // Skip straight to profile selection, no need to re-enter credentials
+  const savedToken = localStorage.getItem('gs_token');
+  const savedGist  = localStorage.getItem('gs_gist');
+
+  if(savedToken && savedGist) {
+    state.token  = savedToken;
+    state.gistId = savedGist;
     $('loadingText').textContent = 'LOADING SQUAD...';
     const ok = await loadData();
     if(ok) {
       setLoading(false);
-      showLockScreen();
+      buildEmojiPicker();
+      renderExistingUsers();
+      goStep(1);
+      $('view-setup').classList.add('active');
       return;
     }
   }
 
-  // ── STATE 3: Nothing saved → Full Setup ──
   setLoading(false);
   $('view-setup').classList.add('active');
 }
@@ -4231,11 +4035,8 @@ window.confirmDeleteProfile = confirmDeleteProfile;
 window.setRole = setRole;
 window.closeModal = closeModal;
 window.copyInviteLink = copyInviteLink;
-window.setInviteLink = setInviteLink;
-window.copyInviteLinkFromMenu = copyInviteLinkFromMenu;
-window.signOutOfSquad = signOutOfSquad;
-window.selectLockUser = selectLockUser;
-window.unlockProfile = unlockProfile;
+window.leaveSquad = leaveSquad;
+window.doLeaveSquad = doLeaveSquad;
 window.openAddResourceModal = openAddResourceModal;
 window.addResource = addResource;
 window.deleteResource = deleteResource;
